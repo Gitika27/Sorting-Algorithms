@@ -1,0 +1,74 @@
+package com.practiceProblems.java;
+
+import java.util.Arrays;
+
+public class ReversePairs {
+	
+	public static void merge(int l, int mid, int h, int[] arr) {
+		
+		int n = mid-l+1;
+		int m = h - mid;
+		
+		int[] left = new int[n];
+		int[] right = new int[m];
+		
+		for(int i = 0; i < n; i++) {
+			left[i] = arr[l+i];
+		}
+		
+		for(int i = 0; i < m; i++) {
+			right[i] = arr[mid+1+i];
+		}
+
+		
+		int k = l;
+		int i = 0;
+		int j = 0;
+		
+		while(i < n && j < m) {
+			
+			if(left[i] <= right[j]) {
+				arr[k] = left[i];
+				i+=1;
+			}
+			else {
+				arr[k] = right[j];
+				j+=1;
+			}
+			k+=1;
+		}
+		
+		// copy the remaining elements 
+		
+		for(int v = i; v < n; v++) {
+			arr[k] = left[v];
+			k+=1;
+		}
+		
+		for(int v = j; v < m; v++) {
+			arr[k] = right[v];
+			k+=1;
+		}
+	
+	}
+	
+	public static void mergeSort(int l, int h, int[] arr) {
+		
+		if(l<h) {
+			int mid = (l+h)/2;
+			mergeSort(l,mid,arr);
+			mergeSort(mid+1,h,arr);
+			merge(l,mid,h,arr);
+		}
+	}
+
+	public static void main(String[] args) {
+		
+		int[] arr = {2,4,3,5,1};
+		mergeSort(0,arr.length-1,arr);
+		System.out.println("Sorted array is "+Arrays.toString(arr));
+	}
+
+}
+
+Output: Sorted array is [1, 2, 3, 4, 5]
